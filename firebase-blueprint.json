@@ -1,0 +1,25 @@
+{
+  "entities": {
+    "ScoreEntry": {
+      "title": "ScoreEntry",
+      "description": "A speedrun type racing score entry",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Player name" },
+        "wpm": { "type": "integer", "description": "Words per minute" },
+        "errors": { "type": "integer", "description": "Number of errors" },
+        "accuracy": { "type": "number", "description": "Accuracy percentage" },
+        "vehicle": { "type": "string", "description": "Selected vehicle type", "enum": ["car", "rocket", "horse"] },
+        "sentenceId": { "type": "string", "description": "Sentence ID typed" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp of the score" }
+      },
+      "required": ["name", "wpm", "errors", "accuracy", "vehicle", "timestamp"]
+    }
+  },
+  "firestore": {
+    "typeracer_scores/{scoreId}": {
+      "schema": "ScoreEntry",
+      "description": "Leaderboard scores for Typeracer"
+    }
+  }
+}
