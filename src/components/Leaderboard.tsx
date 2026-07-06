@@ -28,7 +28,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
         const data = doc.data();
         fetchedScores.push({
           id: doc.id,
-          name: data.name || 'Тоглогч',
+          name: data.name || 'Player',
           wpm: Number(data.wpm) || 0,
           errors: Number(data.errors) ?? 0,
           accuracy: Number(data.accuracy) ?? 100,
@@ -39,7 +39,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
       setScores(fetchedScores);
     } catch (err: any) {
       console.error("Error fetching scores:", err);
-      setError("Онооны самбарыг ачаалахад алдаа гарлаа. Дахин оролдоно уу.");
+      setError("Error loading leaderboard. Please try again.");
       handleFirestoreError(err, OperationType.GET, 'typeracer_scores');
     } finally {
       setLoading(false);
@@ -51,25 +51,25 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
   }, [refreshTrigger]);
 
   const formatDate = (timestamp: any) => {
-    if (!timestamp) return 'Дөнгөж сая';
+    if (!timestamp) return 'Just now';
     try {
       // If it is a firestore Timestamp
       if (timestamp.seconds) {
-        return new Date(timestamp.seconds * 1000).toLocaleDateString('mn-MN', {
+        return new Date(timestamp.seconds * 1000).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
           hour: '2-digit',
           minute: '2-digit',
         });
       }
-      return new Date(timestamp).toLocaleDateString('mn-MN', {
+      return new Date(timestamp).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
       });
     } catch {
-      return 'Мэдэгдээгүй';
+      return 'Unknown';
     }
   };
 
@@ -89,11 +89,11 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <span className="font-mono text-sm font-black text-black">1-р</span>;
+        return <span className="font-mono text-sm font-black text-black">1st</span>;
       case 1:
-        return <span className="font-mono text-sm font-black text-black">2-р</span>;
+        return <span className="font-mono text-sm font-black text-black">2nd</span>;
       case 2:
-        return <span className="font-mono text-sm font-black text-black">3-р</span>;
+        return <span className="font-mono text-sm font-black text-black">3rd</span>;
       default:
         return <span className="font-mono text-sm font-bold text-black">{index + 1}</span>;
     }
@@ -131,14 +131,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
             <Trophy className="w-5 h-5 text-yellow-400" />
           </div>
           <div>
-            <h2 className="text-xl font-black text-black tracking-tight uppercase">Шилдэг 10 Лидер</h2>
-            <p className="text-[10px] font-mono text-black/60 uppercase">// ЦУГЛУУЛГА: typeracer_scores</p>
+            <h2 className="text-xl font-black text-black tracking-tight uppercase">Top 10 Leaders</h2>
+            <p className="text-[10px] font-mono text-black/60 uppercase">// COLLECTION: typeracer_scores</p>
           </div>
         </div>
         <button
           onClick={fetchScores}
           className="p-2 bg-black hover:bg-neutral-800 border-2 border-black text-white hover:text-white transition shadow-brutal-sm cursor-pointer flex items-center justify-center"
-          title="Сэргээх"
+          title="Refresh"
           disabled={loading}
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-yellow-400' : ''}`} />
@@ -166,14 +166,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
             onClick={fetchScores}
             className="px-4 py-2 bg-black hover:bg-neutral-800 text-white font-black text-xs uppercase border-2 border-black shadow-brutal transition"
           >
-            Дахин оролдох
+            Retry
           </button>
         </div>
       ) : scores.length === 0 ? (
         <div className="py-16 text-center border-4 border-dashed border-black bg-[#FAFAFA]">
           <Star className="w-12 h-12 text-black/20 mx-auto mb-3" />
-          <p className="text-black font-black uppercase text-xs">Одоогоор онооны самбар хоосон байна</p>
-          <p className="text-[10px] font-mono text-black/50 mt-1">// Эхний тоглолтоо хийж, нэрээ хадгалаарай!</p>
+          <p className="text-black font-black uppercase text-xs">The leaderboard is currently empty</p>
+          <p className="text-[10px] font-mono text-black/50 mt-1">// Race to set the first highscore!</p>
         </div>
       ) : (
         <div className="overflow-hidden border-4 border-black bg-[#FAFAFA]">
@@ -181,10 +181,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b-4 border-black bg-neutral-100 text-[10px] font-black text-black uppercase tracking-wider">
-                  <th className="py-2.5 px-3 text-center w-14 border-r-2 border-black">Байр</th>
-                  <th className="py-2.5 px-3 border-r-2 border-black">Тоглогч</th>
-                  <th className="py-2.5 px-3 text-right border-r-2 border-black">Хурд (WPM)</th>
-                  <th className="py-2.5 px-3 text-right">Нарийвчлал</th>
+                  <th className="py-2.5 px-3 text-center w-14 border-r-2 border-black">Rank</th>
+                  <th className="py-2.5 px-3 border-r-2 border-black">Player</th>
+                  <th className="py-2.5 px-3 text-right border-r-2 border-black">Speed (WPM)</th>
+                  <th className="py-2.5 px-3 text-right">Accuracy</th>
                 </tr>
               </thead>
               <tbody className="divide-y-2 divide-black/80">
@@ -214,7 +214,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ refreshTrigger = 0 }) 
                     <td className="py-3 px-3 text-right font-mono text-xs text-black">
                       <span className="font-bold">{Math.round(entry.accuracy)}%</span>
                       <span className="block text-[8px] text-red-600/80 font-bold uppercase">
-                        {entry.errors} АЛДАА
+                        {entry.errors} ERRORS
                       </span>
                     </td>
                   </tr>

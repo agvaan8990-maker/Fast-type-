@@ -1,153 +1,135 @@
 export interface Sentence {
   id: string;
   text: string;
-  difficulty: 'Хялбар' | 'Дундаж' | 'Хэцүү';
+  difficulty: 'Easy' | 'Medium' | 'Hard';
   length: number;
 }
 
 export const MON_SENTENCES: Sentence[] = [
   {
     id: '1',
-    text: "Өнөөдөр хийж чадах зүйлийг хэзээ ч маргааш гэж бүү хойшлуул.",
-    difficulty: 'Хялбар',
-    length: 57
+    text: "The quick brown fox jumps over the lazy dog.",
+    difficulty: 'Easy',
+    length: 44
   },
   {
     id: '2',
-    text: "Зуун төгрөгтэй байснаас зуун найзтай байсан нь хавьгүй дээр шүү.",
-    difficulty: 'Хялбар',
-    length: 61
+    text: "Do not put off until tomorrow what you can do today.",
+    difficulty: 'Easy',
+    length: 52
   },
   {
     id: '3',
-    text: "Ном бол ертөнцийг харах цонх бөгөөд мэдлэгийн дундаршгүй далай билээ.",
-    difficulty: 'Дундаж',
-    length: 68
+    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    difficulty: 'Medium',
+    length: 86
   },
   {
     id: '4',
-    text: "Тэвчээр гэдэг бол гашуун ургамал боловч түүний үр жимс нь чихэрлэг байдаг.",
-    difficulty: 'Дундаж',
-    length: 73
+    text: "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    difficulty: 'Medium',
+    length: 88
   },
   {
     id: '5',
-    text: "Алдаа гаргахаас бүү ай, харин алдаанаасаа суралцахгүй байхаас ай.",
-    difficulty: 'Хялбар',
-    length: 62
-  },
-  {
-    id: '6',
-    text: "Амжилтанд хүрэх цорын ганц зам бол өөрийн хийж буй ажилдаа дурлах явдал юм.",
-    difficulty: 'Дундаж',
+    text: "The only limit to our realization of tomorrow will be our doubts of today.",
+    difficulty: 'Easy',
     length: 74
   },
   {
+    id: '6',
+    text: "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    difficulty: 'Hard',
+    length: 110
+  },
+  {
     id: '7',
-    text: "Уулын чинээ харыг туулахад туулайн чинээ цагаан сэтгэл хэрэг болно.",
-    difficulty: 'Дундаж',
-    length: 66
+    text: "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+    difficulty: 'Medium',
+    length: 91
   },
   {
     id: '8',
-    text: "Монгол орны уудам тал нутагт хурдан морьд уралдаж, наадамчин олон баясан цэнгэдэг.",
-    difficulty: 'Хэцүү',
-    length: 83
-  },
-  {
-    id: '9',
-    text: "Шинэ өглөө бүхэн бидэнд өөрийгөө өөрчилж, илүү сайн хүн болох боломжийг олгодог.",
-    difficulty: 'Дундаж',
-    length: 79
-  },
-  {
-    id: '10',
-    text: "Сурах далайд хязгаар үгүй бөгөөд тууштай хөдөлмөрлөсөн хүн л оргилд нь хүрдэг.",
-    difficulty: 'Хэцүү',
-    length: 78
-  },
-  {
-    id: '11',
-    text: "Ухаан уужуу, сэтгэл ариун байж гэмээнэ амьдралын урсгалд зөв замаар замнана.",
-    difficulty: 'Хэцүү',
-    length: 75
-  },
-  {
-    id: '12',
-    text: "Эрдэм сурахад залуу гэлтгүй, ажил хийхэд нас гэлтгүй хичээх хэрэгтэй байдаг.",
-    difficulty: 'Дундаж',
-    length: 75
-  },
-  {
-    id: '13',
-    text: "Сайхан сэтгэлээс сайн үйлс урган гарч, тэрхүү үйлс нь хорвоог дулаацуулдаг.",
-    difficulty: 'Дундаж',
-    length: 73
-  },
-  {
-    id: '14',
-    text: "Инээмсэглэл бол ямар ч зардал гаргахгүйгээр бусдад бэлэглэж болох хамгийн том бэлэг юм.",
-    difficulty: 'Хэцүү',
-    length: 87
-  },
-  {
-    id: '15',
-    text: "Ирээдүйг зөгнөх хамгийн шилдэг арга бол түүнийг өөрийн гараар бүтээн босгох явдал билээ.",
-    difficulty: 'Хэцүү',
+    text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+    difficulty: 'Hard',
     length: 89
   },
   {
+    id: '9',
+    text: "Spread love everywhere you go. Let no one ever come to you without leaving happier.",
+    difficulty: 'Easy',
+    length: 83
+  },
+  {
+    id: '10',
+    text: "It is during our darkest moments that we must focus to see the light.",
+    difficulty: 'Easy',
+    length: 69
+  },
+  {
+    id: '11',
+    text: "The future belongs to those who believe in the beauty of their dreams.",
+    difficulty: 'Medium',
+    length: 70
+  },
+  {
+    id: '12',
+    text: "Many of life's failures are people who did not realize how close they were to success when they gave up.",
+    difficulty: 'Hard',
+    length: 104
+  },
+  {
+    id: '13',
+    text: "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
+    difficulty: 'Hard',
+    length: 104
+  },
+  {
+    id: '14',
+    text: "If you look at what you have in life, you'll always have more. If you look at what you don't have, you will never have enough.",
+    difficulty: 'Hard',
+    length: 126
+  },
+  {
+    id: '15',
+    text: "You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose.",
+    difficulty: 'Medium',
+    length: 107
+  },
+  {
     id: '16',
-    text: "Монгол Улс бол Төв Азийн өндөрлөгт орших, далайд гарцгүй, өнө эртний баялаг түүхтэй, нүүдэлчин соёл иргэншлийг өнөөг хүртэл хадгалж үлдсэн цорын ганц онцлогтой орон билээ.",
-    difficulty: 'Хэцүү',
-    length: 165
+    text: "Artificial intelligence is growing at an unprecedented rate, transforming the way we work, communicate, and solve some of the world's most complex challenges.",
+    difficulty: 'Hard',
+    length: 158
   },
   {
     id: '17',
-    text: "Технологийн хурдацтай хөгжиж буй өнөөгийн эрин үед хиймэл оюун ухаан, програм хангамж болон компьютерын шинжлэх ухаан нь бидний өдөр тутмын амьдралын салшгүй хэсэг болон хувирч байна.",
-    difficulty: 'Хэцүү',
-    length: 180
+    text: "Programming is not just about writing lines of code; it is about logical thinking, solving intricate problems, and building tools that can change human lives for the better.",
+    difficulty: 'Hard',
+    length: 174
   },
   {
     id: '18',
-    text: "Урт өвлийн хүйтэн цаг уур шувтарч, урин дулаан хавар цаг ирэхэд тал нутгийн малчин түмэн мал сүргээ төллүүлж, шинэ амьдрал урган гарч буй мэт баяр хөөртэйгөөр хаврын ажлаа эхлүүлдэг.",
-    difficulty: 'Хэцүү',
-    length: 179
+    text: "The majestic mountains and vast oceans of our beautiful planet remind us of the incredible wonders of nature and the vital importance of preserving our environment for future generations.",
+    difficulty: 'Hard',
+    length: 188
   },
   {
     id: '19',
-    text: "Аливаа улс орны тусгаар тогтнол, аюулгүй байдал, хөгжил дэвшлийн хамгийн гол тулгуур багана нь эрдэм мэдлэгтэй, өндөр боловсролтой, бүтээлч сэтгэлгээтэй залуу үеийнхэн байдаг юм.",
-    difficulty: 'Хэцүү',
-    length: 175
-  },
-  {
-    id: '20',
-    text: "Хурдан бичиж сурахын тулд зөвхөн хурууныхаа хөдөлгөөнийг хянахаас гадна дэлгэцэн дээр гарч буй үгсийг бүтнээр нь уншиж, дараагийн үг рүү урьдчилан харах дадлыг эзэмших нь чухал юм.",
-    difficulty: 'Дундаж',
-    length: 175
-  },
-  {
-    id: '21',
-    text: "Монголчуудын уламжлалт баяр болох Цагаан сараар ахмад настнаа хүндэтгэн золгож, үндэсний хувцас дээлээрээ гоёж, ард түмнээрээ амар амгаланг эрэлхийлэн, ураг төрлөөрөө цуглардаг соёлтой.",
-    difficulty: 'Хэцүү',
+    text: "Learning to type quickly and accurately requires consistent daily practice, proper finger positioning on the home row, and focusing on accuracy first before building up your speed.",
+    difficulty: 'Hard',
     length: 180
   },
   {
-    id: '22',
-    text: "Хүн төрөлхтний соёлын үнэт өв болсон үндэсний бичиг, түүхэн соёл, зан заншлаа өвлөн үлдэж, ирээдүй хойч үедээ үнэн зөвөөр уламжлуулан үлдээх нь иргэн бүрийн журамт үүрэг мөн.",
-    difficulty: 'Хэцүү',
-    length: 169
+    id: '20',
+    text: "When we work together with empathy and respect, we can overcome any obstacle, bridge cultural divides, and build a more inclusive and harmonious society for everyone.",
+    difficulty: 'Hard',
+    length: 165
   },
   {
-    id: '23',
-    text: "Наран мандах зүгээс эхлэн дэлхий дахиныг байлдан дагуулж байсан эзэн Чингис хааны түүх бол хөх монголчуудын бахархал, дэлхийн түүхийн хуудсыг шинээр бичсэн агуу их гавьяа билээ.",
-    difficulty: 'Хэцүү',
-    length: 175
-  },
-  {
-    id: '24',
-    text: "Мөрөөдлийнхөө төлөө алхам алхмаар, цуцалтгүй зүтгэж буй хүн хэзээ нэгэн цагт заавал зорьсондоо хүрч, амжилтын амтыг мэдэрч, өөрийнхөө түүхийг хамгийн гайхалтайгаар бичих болно.",
-    difficulty: 'Дундаж',
-    length: 171
+    id: '21',
+    text: "Space exploration has always captured the human imagination, pushing the boundaries of science and technology as we venture into the unknown depths of the cosmos to discover new worlds.",
+    difficulty: 'Hard',
+    length: 185
   }
 ];

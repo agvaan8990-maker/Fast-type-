@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { TyperacerGame } from './components/TyperacerGame';
 import { Leaderboard } from './components/Leaderboard';
-import { Zap } from 'lucide-react';
 
 export default function App() {
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
@@ -14,9 +13,9 @@ export default function App() {
     <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] font-sans flex flex-col border-[12px] border-black selection:bg-yellow-300 selection:text-black">
       {/* Decorative top tiny status strip */}
       <div className="bg-black text-white px-6 md:px-8 py-2 text-[10px] font-mono tracking-widest flex justify-between items-center border-b-2 border-black overflow-hidden whitespace-nowrap">
-        <span>ХЭСГИЙН ДУГААР: TR-8842-XQ // FIRESTORE РЕАЛ-ТАЙМ СИНК</span>
+        <span>SESSION ID: TR-8842-XQ // FIRESTORE REAL-TIME SYNC</span>
         <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> СЕРВЕР ИДЭВХТЭЙ
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> SERVER ACTIVE
         </span>
       </div>
 
@@ -34,16 +33,16 @@ export default function App() {
                 <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none uppercase text-black">
                   TYPE<br />RACER
                 </h1>
-                <p className="mt-2 font-mono text-xs font-bold text-neutral-600 tracking-tight">// МОНГОЛ ХЭЛНИЙ БИЧИХ ХУРДНЫ УРАЛДААН</p>
+                <p className="mt-2 font-mono text-xs font-bold text-neutral-600 tracking-tight">// MULTI-VEHICLE TYPING SPEED COMPETITION</p>
               </div>
 
               {/* Badges */}
               <div className="flex flex-wrap gap-2">
                 <span className="bg-yellow-400 text-black border-2 border-black font-mono text-xs font-black px-3 py-1 uppercase tracking-wider shadow-brutal-sm">
-                  ⚡ ХУРДНЫ УРАЛДААН
+                  ⚡ SPEED CHALLENGE
                 </span>
                 <span className="bg-black text-white border-2 border-black font-mono text-xs font-black px-3 py-1 uppercase tracking-wider">
-                  МОНГОЛ ХУВИЛБАР
+                  ENGLISH EDITION
                 </span>
               </div>
             </header>
@@ -62,17 +61,17 @@ export default function App() {
           {/* Quick tips & Stats info at the bottom of sidebar */}
           <div className="mt-8 pt-6 border-t-4 border-black font-mono text-xs space-y-3 text-black">
             <div className="flex justify-between items-center font-bold">
-              <span>СИСТЕМИЙН БАЙДАЛ:</span>
-              <span className="text-emerald-950 bg-emerald-400 border border-black font-black px-1.5 py-0.5 text-[10px]">ХОЛБОГДСОН</span>
+              <span>SYSTEM STATUS:</span>
+              <span className="text-emerald-950 bg-emerald-400 border border-black font-black px-1.5 py-0.5 text-[10px]">ONLINE</span>
             </div>
             <div className="flex justify-between items-center font-bold">
-              <span>ӨГӨГДЛИЙН САН:</span>
-              <span className="font-bold">FIRESTORE ҮҮЛЭН САН</span>
+              <span>DATABASE:</span>
+              <span className="font-bold">FIRESTORE CLOUD DB</span>
             </div>
             <div className="bg-white p-4 border-4 border-black font-sans text-xs text-black space-y-1.5 shadow-brutal">
-              <span className="font-black text-black uppercase tracking-wider block">💡 Бичих зөвлөмж:</span>
+              <span className="font-black text-black uppercase tracking-wider block">💡 Typing Tip:</span>
               <p className="leading-snug text-neutral-800">
-                Зөвхөн одоо бичиж буй үсэгтээ бус, дараагийн үгс рүү урьдчилан харах нь таны хурдыг нэмэгдүүлнэ. Алдаа гарвал Backspace дараарай!
+                Looking ahead at the next words rather than just focusing on the current character will increase your typing speed. Press Backspace to correct mistakes!
               </p>
             </div>
           </div>
@@ -81,10 +80,10 @@ export default function App() {
 
       {/* Footer Status Bar */}
       <footer className="bg-black text-white p-4 flex flex-col sm:flex-row justify-between px-6 md:px-8 text-[11px] font-mono tracking-widest uppercase border-t-4 border-black">
-        <div>FIRESTORE ӨГӨГДЛИЙН САНД ХОЛБОГДСОН // АЗИ-ЗҮҮН СЕРВЕР</div>
+        <div>CONNECTED TO FIRESTORE DATABASE // ASIA-EAST CLOUD SERVER</div>
         <div className="flex gap-6 mt-2 sm:mt-0">
-          <span>ХОЦРОЛТ: 14МС</span>
-          <span>© {new Date().getFullYear()} ТАЙПРАСЕР МН // STABLE_2.0</span>
+          <span>LATENCY: 14MS</span>
+          <span>© {new Date().getFullYear()} TYPERACER // STABLE_2.0</span>
         </div>
       </footer>
     </div>

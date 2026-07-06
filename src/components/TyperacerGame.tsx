@@ -29,7 +29,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   });
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>('car');
   const [selectedSentence, setSelectedSentence] = useState<Sentence>(MON_SENTENCES[0]);
-  const [difficultyFilter, setDifficultyFilter] = useState<'Бүгд' | 'Хялбар' | 'Дундаж' | 'Хэцүү'>('Бүгд');
+  const [difficultyFilter, setDifficultyFilter] = useState<'All' | 'Easy' | 'Medium' | 'Hard'>('All');
 
   // Game Engine State
   const [gameState, setGameState] = useState<GameState>('idle');
@@ -52,9 +52,9 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load a random sentence based on difficulty filter
-  const selectRandomSentence = (filter: string = difficultyFilter) => {
+  const selectRandomSentence = (filter: 'All' | 'Easy' | 'Medium' | 'Hard' = difficultyFilter) => {
     const filtered = MON_SENTENCES.filter(
-      s => filter === 'Бүгд' || s.difficulty === filter
+      s => filter === 'All' || s.difficulty === filter
     );
     const randomIndex = Math.floor(Math.random() * filtered.length);
     setSelectedSentence(filtered[randomIndex] || MON_SENTENCES[0]);
@@ -79,7 +79,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   // Handle countdown before game starts
   const startCountdown = () => {
     if (!name.trim()) {
-      setErrorText("Тоглож эхлэхийн тулд нэрээ оруулна уу.");
+      setErrorText("Please enter your name to start playing.");
       return;
     }
     // Save name in localStorage
@@ -214,7 +214,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
       onScoreSaved(); // trigger leaderboard reload
     } catch (err: any) {
       console.error("Error saving score:", err);
-      setErrorText("Оноог хадгалахад алдаа гарлаа. Дахин оролдоно уу.");
+      setErrorText("Error saving score. Please try again.");
       handleFirestoreError(err, OperationType.CREATE, 'typeracer_scores');
     } finally {
       setIsSaving(false);
@@ -260,7 +260,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   };
 
   // Filter change helper
-  const handleDifficultyFilterChange = (filter: 'Бүгд' | 'Хялбар' | 'Дундаж' | 'Хэцүү') => {
+  const handleDifficultyFilterChange = (filter: 'All' | 'Easy' | 'Medium' | 'Hard') => {
     setDifficultyFilter(filter);
     selectRandomSentence(filter);
   };
@@ -280,14 +280,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
             {/* Player Profile & Vehicle */}
             <div className="space-y-4">
               <h3 className="text-sm font-black text-black uppercase tracking-wider flex items-center gap-2">
-                <User className="w-5 h-5 text-black" /> Тоглогчийн Тохиргоо
+                <User className="w-5 h-5 text-black" /> Player Configuration
               </h3>
               
               {/* Name Input */}
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="ТОГЛОГЧИЙН НЭР..."
+                  placeholder="PLAYER NAME..."
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -301,7 +301,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
               {/* Vehicle Picker */}
               <div className="space-y-2">
-                <label className="text-xs font-black uppercase text-black tracking-tight">Уралдах унаа сонгох:</label>
+                <label className="text-xs font-black uppercase text-black tracking-tight">Choose your vehicle:</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2">
                   {(['car', 'rocket', 'horse', 'ufo', 'dragon', 'skate', 'unicorn', 'turtle', 'plane', 'moto', 'train', 'ship', 'camel', 'eagle', 'alien', 'dino', 'ghost', 'bike', 'broom', 'crab'] as VehicleType[]).map((v) => {
                     const icons: Record<VehicleType, string> = {
@@ -327,26 +327,26 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                       crab: '🦀',
                     };
                     const names: Record<VehicleType, string> = {
-                      car: 'Машин',
-                      rocket: 'Пуужин',
-                      horse: 'Морь',
-                      ufo: 'НЛО',
-                      dragon: 'Луу',
-                      skate: 'Скэйт',
-                      unicorn: 'Юникорн',
-                      turtle: 'Мэлхий',
-                      plane: 'Онгоц',
-                      moto: 'Мото',
-                      train: 'Галт тэрэг',
-                      ship: 'Онгоц',
-                      camel: 'Тэмээ',
-                      eagle: 'Бүргэд',
-                      alien: 'Харийнхан',
-                      dino: 'Үлэг гүрвэл',
-                      ghost: 'Сүнс',
-                      bike: 'Дугуй',
-                      broom: 'Шүүр',
-                      crab: 'Хавч',
+                      car: 'Car',
+                      rocket: 'Rocket',
+                      horse: 'Horse',
+                      ufo: 'UFO',
+                      dragon: 'Dragon',
+                      skate: 'Skate',
+                      unicorn: 'Unicorn',
+                      turtle: 'Turtle',
+                      plane: 'Plane',
+                      moto: 'Moto',
+                      train: 'Train',
+                      ship: 'Ship',
+                      camel: 'Camel',
+                      eagle: 'Eagle',
+                      alien: 'Alien',
+                      dino: 'Dino',
+                      ghost: 'Ghost',
+                      bike: 'Bike',
+                      broom: 'Broom',
+                      crab: 'Crab',
                     };
                     const isSelected = selectedVehicle === v;
                     return (
@@ -372,14 +372,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
             {/* Sentence selection */}
             <div className="space-y-4">
               <h3 className="text-sm font-black text-black uppercase tracking-wider flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-black" /> Өгүүлбэрийн Сонголт
+                <BookOpen className="w-5 h-5 text-black" /> Sentence Selection
               </h3>
 
               {/* Difficulty Level Selector */}
               <div className="space-y-2">
-                <label className="text-xs font-black uppercase text-black tracking-tight">Хүндрэлийн зэрэг:</label>
+                <label className="text-xs font-black uppercase text-black tracking-tight">Difficulty Level:</label>
                 <div className="flex gap-2">
-                  {(['Бүгд', 'Хялбар', 'Дундаж', 'Хэцүү'] as const).map((diff) => (
+                  {(['All', 'Easy', 'Medium', 'Hard'] as const).map((diff) => (
                     <button
                       key={diff}
                       type="button"
@@ -400,11 +400,11 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
               <div className="p-4 border-4 border-black bg-neutral-50 space-y-3 shadow-brutal-sm">
                 <div className="flex justify-between items-center border-b border-black pb-1.5">
                   <span className="text-[10px] font-mono font-black text-black/50">
-                    УРТ: {selectedSentence.text.length} ТЭМДЭГТ
+                    LENGTH: {selectedSentence.text.length} CHARS
                   </span>
                   <span className={`text-[9px] font-black px-2 py-0.5 uppercase border border-black ${
-                    selectedSentence.difficulty === 'Хялбар' ? 'bg-green-100 text-green-800' :
-                    selectedSentence.difficulty === 'Дундаж' ? 'bg-yellow-100 text-yellow-800' :
+                    selectedSentence.difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
+                    selectedSentence.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
                   }`}>
                     {selectedSentence.difficulty}
@@ -418,7 +418,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   onClick={() => selectRandomSentence()}
                   className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[10px] tracking-wider border-2 border-black transition cursor-pointer"
                 >
-                  ӨӨР ӨГҮҮЛБЭР СОНГОХ ↺
+                  Change Sentence ↺
                 </button>
               </div>
             </div>
@@ -437,7 +437,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
               disabled={!name.trim()}
               className="px-10 py-5 bg-yellow-400 hover:bg-yellow-300 disabled:bg-neutral-200 disabled:text-neutral-400 text-black border-4 border-black font-black text-xl uppercase tracking-widest shadow-brutal transition-all transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-150 flex items-center gap-2.5 cursor-pointer"
             >
-              <Play className="w-5 h-5 fill-current" /> УРАЛДААНЫГ ЭХЛЭХ →
+              <Play className="w-5 h-5 fill-current" /> START THE RACE →
             </button>
           </div>
         </div>
@@ -456,11 +456,11 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
           {/* Countdown Overlay or Active Board */}
           {gameState === 'countdown' && (
             <div className="bg-white border-4 border-black p-12 shadow-brutal-lg flex flex-col items-center justify-center min-h-[220px]">
-              <span className="text-xs font-black text-black uppercase tracking-widest mb-3">// БЭЛДЭЭРЭЙ //</span>
+              <span className="text-xs font-black text-black uppercase tracking-widest mb-3">// GET READY //</span>
               <div className="text-8xl font-black text-black animate-bounce font-mono">
-                {countdown > 0 ? countdown : 'ГҮЙ!'}
+                {countdown > 0 ? countdown : 'GO!'}
               </div>
-              <p className="text-xs font-bold text-neutral-500 mt-4 uppercase">Бэлэн байгаарай, хуруугаа бэлдээрэй!</p>
+              <p className="text-xs font-bold text-neutral-500 mt-4 uppercase">Get ready, prepare your fingers!</p>
             </div>
           )}
 
@@ -474,21 +474,21 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   <div className="flex items-center gap-2">
                     <Gauge className="w-5 h-5 text-black" />
                     <div>
-                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Хурд</span>
+                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Speed</span>
                       <span className="font-mono text-2xl font-black text-black tabular-nums">{getWPM()} <span className="text-xs">WPM</span></span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Flame className="w-5 h-5 text-black" />
                     <div>
-                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Нарийвчлал</span>
+                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Accuracy</span>
                       <span className="font-mono text-2xl font-black text-black tabular-nums">{getAccuracy()}%</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="w-5 h-5 text-red-600" />
                     <div>
-                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Алдаа</span>
+                      <span className="block text-[9px] text-neutral-500 font-black uppercase tracking-tight">Errors</span>
                       <span className="font-mono text-2xl font-black text-red-600 tabular-nums">{errors}</span>
                     </div>
                   </div>
@@ -496,14 +496,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
                 <div className="flex items-center gap-1.5 bg-black text-white border-2 border-black px-4 py-2 font-mono text-sm font-black">
                   <Hourglass className="w-4 h-4 text-yellow-400 animate-spin" />
-                  <span>{elapsedTime}С</span>
+                  <span>{elapsedTime}S</span>
                 </div>
               </div>
 
               {/* Target Sentence Display */}
               <div className="bg-white border-4 border-black p-6 md:p-8 relative min-h-[140px] flex items-center justify-center shadow-inner">
                 <div className="absolute top-[-14px] left-6 bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter italic border border-black">
-                  ОДОО БИЧИНЭ ҮҮ // ОДООГИЙН ӨГҮҮЛБЭР
+                  TYPE NOW // CURRENT SENTENCE
                 </div>
                 {renderHighlightedSentence()}
               </div>
@@ -515,7 +515,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   type="text"
                   value={inputValue}
                   onChange={handleInputChange}
-                  placeholder="ЭНД БИЧИЖ ЭХЭЛНЭ ҮҮ..."
+                  placeholder="START TYPING HERE..."
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck="false"
@@ -527,7 +527,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   type="button"
                   onClick={resetGameEngine}
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 bg-black hover:bg-neutral-800 text-white border-2 border-black transition shadow-brutal-sm cursor-pointer"
-                  title="Уралдааныг цуцлах"
+                  title="Cancel race"
                 >
                   <RotateCcw className="w-5 h-5" />
                 </button>
@@ -544,31 +544,31 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 border-4 border-black text-black shadow-brutal mb-2">
                   <Sparkles className="w-8 h-8" />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter uppercase leading-none">БАРИАНД ОРЛОО! 🏁</h2>
-                <p className="text-xs font-mono text-neutral-500 uppercase tracking-tight mt-2">// УРАЛДААН АМЖИЛТТАЙ ДУУСЛАА</p>
+                <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter uppercase leading-none">RACE FINISHED! 🏁</h2>
+                <p className="text-xs font-mono text-neutral-500 uppercase tracking-tight mt-2">// COMPLETED SUCCESSFULLY</p>
               </div>
 
               {/* Stats Card Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-white border-4 border-black p-4 text-center shadow-brutal-sm">
-                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Бичих хурд</span>
+                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Typing Speed</span>
                   <span className="block font-mono text-4xl font-black text-black">{getWPM()}</span>
-                  <span className="text-[10px] font-black uppercase text-black/60">Үг / минут (WPM)</span>
+                  <span className="text-[10px] font-black uppercase text-black/60">Words / Minute (WPM)</span>
                 </div>
                 <div className="bg-white border-4 border-black p-4 text-center shadow-brutal-sm">
-                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Нарийвчлал</span>
+                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Accuracy</span>
                   <span className="block font-mono text-4xl font-black text-black">{getAccuracy()}%</span>
-                  <span className="text-[10px] font-black uppercase text-black/60">ЗӨВ ДАРАЛТ</span>
+                  <span className="text-[10px] font-black uppercase text-black/60">CORRECT KEYS</span>
                 </div>
                 <div className="bg-white border-4 border-black p-4 text-center shadow-brutal-sm">
-                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Алдаа</span>
+                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Errors</span>
                   <span className="block font-mono text-4xl font-black text-red-600">{errors}</span>
-                  <span className="text-[10px] font-black uppercase text-red-600/80">Нийт алдаа</span>
+                  <span className="text-[10px] font-black uppercase text-red-600/80">TOTAL ERRORS</span>
                 </div>
                 <div className="bg-white border-4 border-black p-4 text-center shadow-brutal-sm">
-                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Хугацаа</span>
-                  <span className="block font-mono text-4xl font-black text-black">{getElapsedSeconds().toFixed(1)}с</span>
-                  <span className="text-[10px] font-black uppercase text-black/60">ЗАРЦУУЛСАН</span>
+                  <span className="block text-[10px] text-neutral-500 font-black uppercase tracking-wider mb-1">Time</span>
+                  <span className="block font-mono text-4xl font-black text-black">{getElapsedSeconds().toFixed(1)}s</span>
+                  <span className="text-[10px] font-black uppercase text-black/60">ELAPSED TIME</span>
                 </div>
               </div>
 
@@ -578,8 +578,8 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   <div className="flex items-center gap-3">
                     <Award className="w-6 h-6 text-black" />
                     <div>
-                      <h4 className="text-base font-black uppercase tracking-tight">Оноог Лидерүүдийн Самбарт хадгалах</h4>
-                      <p className="text-xs font-bold text-black/70">Энэ амжилтаараа шилдэг тоглогчидтой өрсөлдөөрэй.</p>
+                      <h4 className="text-base font-black uppercase tracking-tight">Save Score to Leaderboard</h4>
+                      <p className="text-xs font-bold text-black/70">Compete with top typists with this performance.</p>
                     </div>
                   </div>
                   
@@ -587,7 +587,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                     <div className="relative flex-1">
                       <input
                         type="text"
-                        placeholder="ОНОО ХАДГАЛАХ НЭР..."
+                        placeholder="ENTER YOUR NAME..."
                         value={name}
                         onChange={(e) => {
                           setName(e.target.value);
@@ -604,7 +604,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                       disabled={isSaving || !name.trim()}
                       className="px-6 py-3 bg-black hover:bg-neutral-800 disabled:bg-neutral-200 disabled:text-neutral-500 text-white font-black text-xs uppercase border-4 border-black shadow-brutal-sm transition cursor-pointer flex items-center justify-center gap-2 shrink-0"
                     >
-                      {isSaving ? 'ХАДГАЛЖ БАЙНА...' : 'ОНООГ ХАДГАЛАХ'}
+                      {isSaving ? 'SAVING...' : 'SAVE SCORE'}
                     </button>
                   </div>
                   
@@ -620,8 +620,8 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                     <Check className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black uppercase text-green-950">ОНОО АМЖИЛТТАЙ ХАДГАЛАГДЛАА!</h4>
-                    <p className="text-xs font-bold text-green-800">Лидерүүдийн самбараас өөрийн байрыг хараарай.</p>
+                    <h4 className="text-sm font-black uppercase text-green-950">SCORE SAVED SUCCESSFULLY!</h4>
+                    <p className="text-xs font-bold text-green-800">Check your ranking on the live leaderboard below.</p>
                   </div>
                 </div>
               )}
@@ -632,13 +632,13 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   onClick={() => selectRandomSentence()}
                   className="px-6 py-4 bg-white hover:bg-neutral-50 text-black font-black uppercase text-sm border-4 border-black shadow-brutal transition cursor-pointer flex items-center justify-center gap-2 transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-100"
                 >
-                  <RotateCcw className="w-4 h-4" /> ШИНЭ ӨГҮҮЛБЭРТЭЙ ТОГЛОХ
+                  <RotateCcw className="w-4 h-4" /> PLAY WITH NEW SENTENCE
                 </button>
                 <button
                   onClick={startCountdown}
                   className="px-8 py-4 bg-[#FF9F66] hover:bg-[#ff8f50] text-black font-black uppercase text-sm border-4 border-black shadow-brutal transition cursor-pointer flex items-center justify-center gap-2 transform hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-100"
                 >
-                  <Play className="w-4 h-4 fill-current" /> ЭНЭ ӨГҮҮЛБЭРЭЭР ДАХИН ТОГЛОХ
+                  <Play className="w-4 h-4 fill-current" /> REPLAY THIS SENTENCE
                 </button>
               </div>
 
