@@ -14,12 +14,29 @@
         "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp of the score" }
       },
       "required": ["name", "wpm", "errors", "accuracy", "vehicle", "timestamp"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "A real-time multiplayer type-racing room",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string", "description": "Unique 4-character uppercase code" },
+        "sentenceId": { "type": "string", "description": "The sentence ID from MON_SENTENCES" },
+        "status": { "type": "string", "enum": ["waiting", "countdown", "playing", "finished"], "description": "Game status" },
+        "players": { "type": "object", "description": "Map of players in the room, keyed by session ID" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["roomId", "sentenceId", "status", "players", "createdAt"]
     }
   },
   "firestore": {
     "typeracer_scores/{scoreId}": {
       "schema": "ScoreEntry",
       "description": "Leaderboard scores for Typeracer"
+    },
+    "typeracer_rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Real-time multiplayer race rooms"
     }
   }
 }

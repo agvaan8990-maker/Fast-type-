@@ -19,6 +19,23 @@ export default function App() {
         </span>
       </div>
 
+      {/* Navigation / Tab Bar */}
+      <div className="bg-neutral-100 border-b-4 border-black flex flex-wrap items-stretch">
+        <div className="px-6 py-3 bg-white border-r-4 border-black font-mono font-black text-xs uppercase tracking-wider text-black flex items-center gap-2 select-none">
+          🎮 Current App (TypeRacer Local)
+        </div>
+        <a 
+          href="https://fast-type-9kal.vercel.app/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          id="typeracer-vercel-tab"
+          className="px-6 py-3 bg-yellow-400 hover:bg-yellow-300 border-r-4 border-black font-mono font-black text-xs uppercase tracking-wider text-black flex items-center gap-2 cursor-pointer transition-colors relative group shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+        >
+          <span>⌨️ Typeracer</span>
+          <span className="text-[9px] bg-black text-white px-1.5 py-0.5 rounded border border-black font-sans uppercase group-hover:bg-neutral-800 transition-colors">Vercel ↗</span>
+        </a>
+      </div>
+
       {/* Main Container Grid */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12">
         
@@ -44,6 +61,16 @@ export default function App() {
                 <span className="bg-black text-white border-2 border-black font-mono text-xs font-black px-3 py-1 uppercase tracking-wider">
                   ENGLISH EDITION
                 </span>
+                <a 
+                  href="https://fast-type-9kal.vercel.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  id="header-typeracer-badge-tab"
+                  className="bg-sky-400 hover:bg-sky-300 text-black border-2 border-black font-mono text-xs font-black px-3 py-1 uppercase tracking-wider shadow-brutal-sm flex items-center gap-1.5 transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
+                  title="Visit Vercel Typeracer Portfolio"
+                >
+                  ⌨️ Typeracer ↗
+                </a>
               </div>
             </header>
 

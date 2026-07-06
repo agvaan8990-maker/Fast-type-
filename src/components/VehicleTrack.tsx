@@ -5,6 +5,9 @@ interface VehicleTrackProps {
   progress: number; // 0 to 100
   selectedVehicle: VehicleType;
   gameState: 'idle' | 'countdown' | 'playing' | 'completed';
+  playerName?: string;
+  isMe?: boolean;
+  laps?: number;
 }
 
 const VEHICLE_EMOJIS: Record<VehicleType, string> = {
@@ -57,6 +60,9 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
   progress,
   selectedVehicle,
   gameState,
+  playerName,
+  isMe,
+  laps = 0,
 }) => {
   // Ensure progress stays within 0 and 100
   const clampedProgress = Math.min(Math.max(progress, 0), 100);
@@ -70,7 +76,12 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
       <div className="flex justify-between items-center mb-3 relative z-10">
         <span className="text-xs font-black text-black uppercase tracking-wider flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 bg-black text-white font-mono flex items-center justify-center text-[8px] border border-black">🏁</span>
-          Race Track ({VEHICLE_NAMES[selectedVehicle]})
+          {isMe ? 'YOUR' : `${playerName?.toUpperCase() || 'PLAYER'}'S`} TRACK ({VEHICLE_NAMES[selectedVehicle]})
+          {laps > 0 && (
+            <span className="bg-yellow-400 text-black border-2 border-black px-1.5 py-0.5 text-[9px] font-black tracking-tight ml-2 animate-bounce">
+              LAP {laps + 1}
+            </span>
+          )}
         </span>
         <span className="text-xs font-mono font-black bg-black text-white px-2.5 py-0.5 border border-black">
           {Math.round(clampedProgress)}%
@@ -216,9 +227,9 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
             </span>
 
             {/* Indicator label above */}
-            {gameState === 'playing' && (
+            {(gameState === 'playing' || gameState === 'completed') && (
               <span className="absolute -top-5 text-[9px] font-mono font-black bg-yellow-400 text-black border border-black px-1.5 py-0.5 shadow-brutal-sm whitespace-nowrap uppercase">
-                YOU
+                {isMe ? 'YOU' : playerName?.toUpperCase() || 'PLAYER'}
               </span>
             )}
           </div>

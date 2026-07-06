@@ -5,5 +5,9 @@ service cloud.firestore {
       allow read, create: if true;
       allow update, delete: if false;
     }
+    match /typeracer_rooms/{document} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
   }
 }
