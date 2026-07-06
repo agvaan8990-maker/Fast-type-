@@ -35,6 +35,8 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   const [gameState, setGameState] = useState<GameState>('idle');
   const [countdown, setCountdown] = useState<number>(3);
   const [inputValue, setInputValue] = useState<string>('');
+  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
+  const [showPageSuccessToast, setShowPageSuccessToast] = useState<boolean>(false);
   
   // Stats tracking
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -65,6 +67,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   const resetGameEngine = () => {
     setGameState('idle');
     setInputValue('');
+    setCurrentPageIndex(0);
     setErrors(0);
     setPrevInputLength(0);
     setStartTime(null);
@@ -72,6 +75,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
     setElapsedTime(0);
     setSaveSuccess(false);
     setErrorText(null);
+    setShowPageSuccessToast(false);
     if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
     if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
   };
@@ -88,12 +92,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
     setGameState('countdown');
     setCountdown(3);
     setInputValue('');
+    setCurrentPageIndex(0);
     setErrors(0);
     setPrevInputLength(0);
     setStartTime(null);
     setEndTime(null);
     setElapsedTime(0);
     setSaveSuccess(false);
+    setShowPageSuccessToast(false);
 
     countdownIntervalRef.current = setInterval(() => {
       setCountdown((prev) => {
@@ -137,7 +143,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   // Handle typing input changes and error tracking
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const targetText = selectedSentence.text;
+    const targetText = selectedSentence.pages[currentPageIndex] || '';
 
     // Only allow typing up to target sentence length
     if (value.length > targetText.length) return;
@@ -155,7 +161,16 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
     // Check if finished and matches 100%
     if (value === targetText) {
-      finishGame();
+      if (currentPageIndex < selectedSentence.pages.length - 1) {
+        // Advance to next page
+        setShowPageSuccessToast(true);
+        setTimeout(() => setShowPageSuccessToast(false), 1500);
+        setCurrentPageIndex((prev) => prev + 1);
+        setInputValue('');
+        setPrevInputLength(0);
+      } else {
+        finishGame();
+      }
     }
   };
 
@@ -178,13 +193,22 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
   const getWPM = () => {
     const secs = getElapsedSeconds();
     if (secs === 0) return 0;
-    const chars = inputValue.length;
+    
+    const completedPagesChars = selectedSentence.pages
+      .slice(0, currentPageIndex)
+      .reduce((acc, p) => acc + p.length, 0);
+    const chars = completedPagesChars + inputValue.length;
+    
     const wpm = (chars / 5) / (secs / 60);
     return Math.round(wpm);
   };
 
   const getAccuracy = () => {
-    const typedLength = inputValue.length;
+    const completedPagesChars = selectedSentence.pages
+      .slice(0, currentPageIndex)
+      .reduce((acc, p) => acc + p.length, 0);
+    const typedLength = completedPagesChars + inputValue.length;
+    
     if (typedLength === 0) return 100;
     const totalAttempts = typedLength + errors;
     const accuracy = (typedLength / totalAttempts) * 100;
@@ -223,7 +247,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
   // Highlight character logic
   const renderHighlightedSentence = () => {
-    const text = selectedSentence.text;
+    const text = selectedSentence.pages[currentPageIndex] || '';
     const typed = inputValue;
 
     return (
@@ -265,9 +289,13 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
     selectRandomSentence(filter);
   };
 
-  // Compute live progress percentage
-  const progressPercentage = selectedSentence.text.length > 0 
-    ? (inputValue.length / selectedSentence.text.length) * 100 
+  // Compute live progress percentage across all pages
+  const totalChars = selectedSentence.pages.reduce((acc, p) => acc + p.length, 0);
+  const completedPagesChars = selectedSentence.pages
+    .slice(0, currentPageIndex)
+    .reduce((acc, p) => acc + p.length, 0);
+  const progressPercentage = totalChars > 0 
+    ? ((completedPagesChars + inputValue.length) / totalChars) * 100 
     : 0;
 
   return (
@@ -398,11 +426,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
               {/* Randomizer Card */}
               <div className="p-4 border-4 border-black bg-neutral-50 space-y-3 shadow-brutal-sm">
-                <div className="flex justify-between items-center border-b border-black pb-1.5">
-                  <span className="text-[10px] font-mono font-black text-black/50">
-                    LENGTH: {selectedSentence.text.length} CHARS
+                <div className="flex justify-between items-center border-b border-black pb-1.5 gap-2">
+                  <span className="text-[10px] font-mono font-black text-black/60 truncate">
+                    TITLE: {selectedSentence.title.toUpperCase()}
                   </span>
-                  <span className={`text-[9px] font-black px-2 py-0.5 uppercase border border-black ${
+                  <span className="text-[10px] font-mono font-black text-black/50 shrink-0">
+                    PAGES: {selectedSentence.pages.length}
+                  </span>
+                  <span className={`text-[9px] font-black px-2 py-0.5 uppercase border border-black shrink-0 ${
                     selectedSentence.difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
                     selectedSentence.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
@@ -411,14 +442,14 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   </span>
                 </div>
                 <p className="text-xs text-black leading-snug italic font-medium">
-                  "{selectedSentence.text}"
+                  "{selectedSentence.pages[0].slice(0, 75)}..."
                 </p>
                 <button
                   type="button"
                   onClick={() => selectRandomSentence()}
                   className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[10px] tracking-wider border-2 border-black transition cursor-pointer"
                 >
-                  Change Sentence ↺
+                  Change Text ↺
                 </button>
               </div>
             </div>
@@ -502,10 +533,19 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
 
               {/* Target Sentence Display */}
               <div className="bg-white border-4 border-black p-6 md:p-8 relative min-h-[140px] flex items-center justify-center shadow-inner">
-                <div className="absolute top-[-14px] left-6 bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter italic border border-black">
-                  TYPE NOW // CURRENT SENTENCE
+                <div className="absolute top-[-14px] left-6 bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter italic border border-black flex items-center gap-2">
+                  <span>TYPE NOW // {selectedSentence.title.toUpperCase()}</span>
+                  <span className="bg-yellow-400 text-black px-1.5 font-bold">PAGE {currentPageIndex + 1} OF {selectedSentence.pages.length}</span>
                 </div>
                 {renderHighlightedSentence()}
+
+                {/* Page Completed Success Toast */}
+                {showPageSuccessToast && (
+                  <div className="absolute inset-0 bg-yellow-400 border-4 border-black flex flex-col items-center justify-center z-20 animate-fade-in shadow-brutal-sm">
+                    <span className="text-2xl font-black text-black tracking-tight uppercase animate-bounce">PAGE COMPLETED! 🎉</span>
+                    <span className="text-xs font-mono font-bold text-black/80 mt-1">ADVANCING TO PAGE {currentPageIndex + 1} OF {selectedSentence.pages.length}...</span>
+                  </div>
+                )}
               </div>
 
               {/* Interactive Input Field */}
@@ -519,7 +559,7 @@ export const TyperacerGame: React.FC<TyperacerGameProps> = ({ onScoreSaved }) =>
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck="false"
-                  className="w-full bg-white border-4 border-black p-6 text-2xl md:text-3xl font-mono font-bold text-black placeholder-neutral-400 focus:outline-none focus:bg-yellow-50 focus:ring-2 focus:ring-yellow-400 shadow-brutal-lg uppercase"
+                  className="w-full bg-white border-4 border-black p-6 text-2xl md:text-3xl font-mono font-bold text-black placeholder-neutral-400 focus:outline-none focus:bg-yellow-50 focus:ring-2 focus:ring-yellow-400 shadow-brutal-lg"
                 />
                 
                 {/* Cancel Game Button */}

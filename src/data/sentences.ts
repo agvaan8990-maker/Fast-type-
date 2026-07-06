@@ -1,135 +1,103 @@
 export interface Sentence {
   id: string;
-  text: string;
+  title: string;
+  pages: string[];
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  length: number;
 }
 
 export const MON_SENTENCES: Sentence[] = [
+  // --- EASY LEVEL ---
   {
-    id: '1',
-    text: "The quick brown fox jumps over the lazy dog.",
+    id: 'easy1',
+    title: 'The Forest Trail',
     difficulty: 'Easy',
-    length: 44
+    pages: [
+      'The sun is warm today. A soft wind blows through the trees. We walk on a small path.',
+      'We can see pretty blue flowers on the grass. Small birds sing their happy songs from the branches above.',
+      'A quiet river flows by the path. The water is clear and cold. This is a very peaceful place to spend the afternoon.'
+    ]
   },
   {
-    id: '2',
-    text: "Do not put off until tomorrow what you can do today.",
+    id: 'easy2',
+    title: 'The Friendly Cat',
     difficulty: 'Easy',
-    length: 52
+    pages: [
+      'I have a little cat with soft gray fur. He likes to sleep on my lap while I read my favorite books.',
+      'When he wakes up, he wants to play with a small red ball. He is a very happy and funny pet.'
+    ]
   },
   {
-    id: '3',
-    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    difficulty: 'Medium',
-    length: 86
-  },
-  {
-    id: '4',
-    text: "Do not go where the path may lead, go instead where there is no path and leave a trail.",
-    difficulty: 'Medium',
-    length: 88
-  },
-  {
-    id: '5',
-    text: "The only limit to our realization of tomorrow will be our doubts of today.",
+    id: 'easy3',
+    title: 'A Sunny Morning',
     difficulty: 'Easy',
-    length: 74
+    pages: [
+      'Morning is a beautiful time of the day. The sky is bright blue and the air feels fresh and clean.',
+      'I drink a cup of warm tea and look out the window. It is going to be a wonderful day for everyone.'
+    ]
   },
+
+  // --- MEDIUM LEVEL ---
   {
-    id: '6',
-    text: "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
-    difficulty: 'Hard',
-    length: 110
-  },
-  {
-    id: '7',
-    text: "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+    id: 'medium1',
+    title: 'The Spirit of Adventure',
     difficulty: 'Medium',
-    length: 91
+    pages: [
+      'Humans have always possessed a deep and natural urge to explore the unknown. From sailing across uncharted oceans to mapping the distant stars, we constantly strive to push past our boundaries.',
+      'This restless curiosity is what drove ancient travelers to cross vast deserts and climb the tallest peaks, facing incredible dangers in search of new horizons and untold stories.',
+      'Today, that same spirit continues to guide our scientists and thinkers as they seek to understand the deepest mysteries of nature, the human mind, and the outer limits of space.'
+    ]
   },
   {
-    id: '8',
-    text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
-    difficulty: 'Hard',
-    length: 89
-  },
-  {
-    id: '9',
-    text: "Spread love everywhere you go. Let no one ever come to you without leaving happier.",
-    difficulty: 'Easy',
-    length: 83
-  },
-  {
-    id: '10',
-    text: "It is during our darkest moments that we must focus to see the light.",
-    difficulty: 'Easy',
-    length: 69
-  },
-  {
-    id: '11',
-    text: "The future belongs to those who believe in the beauty of their dreams.",
+    id: 'medium2',
+    title: 'The Power of Habits',
     difficulty: 'Medium',
-    length: 70
+    pages: [
+      'Our daily habits shape our lives far more than we realize. The small choices we make every single day, from what we eat to how we spend our free time, slowly build up over months and years.',
+      'If you focus on making just a tiny improvement of one percent each day, the compound effect over time will lead to extraordinary growth and positive transformation in your life.',
+      'The key to success is not a sudden burst of massive action, but rather the quiet consistency of keeping good habits and staying disciplined even when nobody is watching you.'
+    ]
   },
   {
-    id: '12',
-    text: "Many of life's failures are people who did not realize how close they were to success when they gave up.",
-    difficulty: 'Hard',
-    length: 104
-  },
-  {
-    id: '13',
-    text: "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
-    difficulty: 'Hard',
-    length: 104
-  },
-  {
-    id: '14',
-    text: "If you look at what you have in life, you'll always have more. If you look at what you don't have, you will never have enough.",
-    difficulty: 'Hard',
-    length: 126
-  },
-  {
-    id: '15',
-    text: "You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose.",
+    id: 'medium3',
+    title: 'The Ocean Depths',
     difficulty: 'Medium',
-    length: 107
+    pages: [
+      'The ocean covers more than seventy percent of our planet, yet it remains one of the least explored and most mysterious environments in the entire solar system.',
+      'Deep beneath the surface, where sunlight never reaches, strange and beautiful creatures have adapted to survive under extreme water pressure and freezing temperatures.',
+      'Exploring these deep hydrothermal vents and deep trenches helps scientists learn about the origins of life on Earth and search for signs of life on other watery worlds.'
+    ]
+  },
+
+  // --- HARD LEVEL ---
+  {
+    id: 'hard1',
+    title: 'The Symphony of Code',
+    difficulty: 'Hard',
+    pages: [
+      'Writing clean software requires deep focus; it is a meticulous craft where every semicolon (;) and curly brace ({}) has a distinct purpose. An elegant algorithm balances efficiency and human readability.',
+      'Consider the complexity: function processData(items) { return items.filter(x => x.active).map(y => y.value); }. A single misplaced character can instantly cascade into a fatal stack overflow error.',
+      'Moreover, modern full-stack systems rely heavily on asynchronous event-loops, distributed databases, and high-performance WebSockets to handle thousands of concurrent queries without blocking runtime threads.',
+      'Ultimately, the ultimate goal of a senior software engineer is not merely to write code, but to engineer robust, scalable architectures that stand the test of time under extreme production workloads.'
+    ]
   },
   {
-    id: '16',
-    text: "Artificial intelligence is growing at an unprecedented rate, transforming the way we work, communicate, and solve some of the world's most complex challenges.",
+    id: 'hard2',
+    title: 'The Paradox of Time',
     difficulty: 'Hard',
-    length: 158
+    pages: [
+      'Albert Einstein fundamentally transformed our understanding of the universe with his theory of relativity: space and time are not absolute, but are interwoven into a dynamic four-dimensional fabric.',
+      'Under extreme conditions—such as nearing the event horizon of a supermassive black hole—gravitational time dilation causes clock cycles to slow down relative to a distant, stationary observer.',
+      'This counter-intuitive reality implies that "now" is merely a subjective construct, and the strict division between the past, present, and future is ultimately a persistent and stubborn illusion.'
+    ]
   },
   {
-    id: '17',
-    text: "Programming is not just about writing lines of code; it is about logical thinking, solving intricate problems, and building tools that can change human lives for the better.",
+    id: 'hard3',
+    title: 'The Digital Frontier',
     difficulty: 'Hard',
-    length: 174
-  },
-  {
-    id: '18',
-    text: "The majestic mountains and vast oceans of our beautiful planet remind us of the incredible wonders of nature and the vital importance of preserving our environment for future generations.",
-    difficulty: 'Hard',
-    length: 188
-  },
-  {
-    id: '19',
-    text: "Learning to type quickly and accurately requires consistent daily practice, proper finger positioning on the home row, and focusing on accuracy first before building up your speed.",
-    difficulty: 'Hard',
-    length: 180
-  },
-  {
-    id: '20',
-    text: "When we work together with empathy and respect, we can overcome any obstacle, bridge cultural divides, and build a more inclusive and harmonious society for everyone.",
-    difficulty: 'Hard',
-    length: 165
-  },
-  {
-    id: '21',
-    text: "Space exploration has always captured the human imagination, pushing the boundaries of science and technology as we venture into the unknown depths of the cosmos to discover new worlds.",
-    difficulty: 'Hard',
-    length: 185
+    pages: [
+      'Modern cryptography secures our digital lives using mathematically rigorous principles, such as RSA encryption (utilizing prime factors) and elliptic-curve digital signature algorithms (ECDSA).',
+      'A secure protocol must guarantee three critical pillars: confidentiality, integrity, and authenticity. Without these cryptographic safeguards, online financial systems would instantaneously collapse.',
+      'As quantum computing advances rapidly, researchers are urgently developing "post-quantum cryptography" (PQC) standards to defend our global infrastructure against future multi-threaded decryption exploits.'
+    ]
   }
 ];

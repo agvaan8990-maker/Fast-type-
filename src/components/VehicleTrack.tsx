@@ -31,26 +31,26 @@ const VEHICLE_EMOJIS: Record<VehicleType, string> = {
 };
 
 const VEHICLE_NAMES: Record<VehicleType, string> = {
-  car: 'Машин',
-  rocket: 'Пуужин',
-  horse: 'Морь',
-  ufo: 'НЛО',
-  dragon: 'Луу',
-  skate: 'Скэйт',
-  unicorn: 'Ганц эвэрт',
-  turtle: 'Яст мэлхий',
-  plane: 'Онгоц',
-  moto: 'Мотоцикл',
-  train: 'Галт тэрэг',
-  ship: 'Усан онгоц',
-  camel: 'Тэмээ',
-  eagle: 'Бүргэд',
-  alien: 'Харийнхан',
-  dino: 'Үлэг гүрвэл',
-  ghost: 'Сүнс',
-  bike: 'Дугуй',
-  broom: 'Ид шидийн шүүр',
-  crab: 'Хавч',
+  car: 'Car',
+  rocket: 'Rocket',
+  horse: 'Horse',
+  ufo: 'UFO',
+  dragon: 'Dragon',
+  skate: 'Skateboard',
+  unicorn: 'Unicorn',
+  turtle: 'Turtle',
+  plane: 'Airplane',
+  moto: 'Motorcycle',
+  train: 'Train',
+  ship: 'Ship',
+  camel: 'Camel',
+  eagle: 'Eagle',
+  alien: 'Alien',
+  dino: 'Dinosaur',
+  ghost: 'Ghost',
+  bike: 'Bicycle',
+  broom: 'Magic Broom',
+  crab: 'Crab',
 };
 
 export const VehicleTrack: React.FC<VehicleTrackProps> = ({
@@ -70,7 +70,7 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
       <div className="flex justify-between items-center mb-3 relative z-10">
         <span className="text-xs font-black text-black uppercase tracking-wider flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 bg-black text-white font-mono flex items-center justify-center text-[8px] border border-black">🏁</span>
-          Уралдааны зам ({VEHICLE_NAMES[selectedVehicle]})
+          Race Track ({VEHICLE_NAMES[selectedVehicle]})
         </span>
         <span className="text-xs font-mono font-black bg-black text-white px-2.5 py-0.5 border border-black">
           {Math.round(clampedProgress)}%
@@ -218,7 +218,7 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
             {/* Indicator label above */}
             {gameState === 'playing' && (
               <span className="absolute -top-5 text-[9px] font-mono font-black bg-yellow-400 text-black border border-black px-1.5 py-0.5 shadow-brutal-sm whitespace-nowrap uppercase">
-                ТА
+                YOU
               </span>
             )}
           </div>
@@ -245,8 +245,8 @@ export const VehicleTrack: React.FC<VehicleTrackProps> = ({
       
       {/* Decorative Track Guidelines */}
       <div className="flex justify-between mt-2 px-1 text-[10px] font-mono font-bold text-black/60">
-        <span>// ЭХЛЭЛ_LINE</span>
-        <span>// БАРЬЯ_FINISH</span>
+        <span>// START_LINE</span>
+        <span>// FINISH_LINE</span>
       </div>
     </div>
   );
